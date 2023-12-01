@@ -1,3 +1,13 @@
+This Python script is designed to automate the process of sending daily stand-up messages to team members within a Slack workspace. 
+It leverages the Slack API by utilizing the slack.WebClient to establish a connection to Slack. 
+The code defines two essential functions: send_standup_message and get_team_members. 
+The former function sends a predefined stand-up message to a specified Slack channel, while the latter fetches a list of team members excluding bots, obtaining their IDs and names. 
+The script prompts the user to replace 'YOUR_CHANNEL_ID' with the actual ID of the target Slack channel. 
+Once configured, it retrieves the team members' list and iterates through each member, sending the stand-up message individually to prompt them for their daily updates. 
+Error handling is incorporated to manage potential API call failures, ensuring any encountered errors are displayed for debugging purposes. 
+Overall, this code streamlines the process of initiating daily stand-ups by automating the distribution of messages to team members on Slack.
+
+
 import os
 from slack import WebClient
 from slack.errors import SlackApiError
