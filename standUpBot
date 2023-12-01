@@ -1,0 +1,40 @@
+import os
+from slack import WebClient
+from slack.errors import SlackApiError
+
+# Initialize the Slack WebClient with your bot token
+slack_token = os.environ['SLACK_BOT_TOKEN']  # Replace with your bot token
+client = WebClient(token=slack_token)
+
+# Function to send stand-up message to users
+def send_standup_message(channel_id):
+    try:
+        # Replace with your stand-up message
+        standup_message = "Hi team! It's time for the daily stand-up. Please share your updates for today."
+
+        # Send the stand-up message to the specified channel
+        response = client.chat_postMessage(channel=channel_id, text=standup_message)
+        print("Stand-up message sent successfully!")
+    except SlackApiError as e:
+        print(f"Error sending stand-up message: {e.response['error']}")
+
+# Get a list of team members and their IDs
+def get_team_members():
+    try:
+        response = client.users_list()
+        members = response['members']
+        team_members = [(member['id'], member['name']) for member in members if not member['is_bot']]
+        return team_members
+    except SlackApiError as e:
+        print(f"Error getting team members: {e.response['error']}")
+        return []
+
+# Replace with the ID of your Slack channel
+channel_id = 'YOUR_CHANNEL_ID'  # Replace with your channel ID
+
+# Get the list of team members
+members = get_team_members()
+
+# Send stand-up messages to each team member
+for member_id, member_name in members:
+    send_standup_message(member_id)
